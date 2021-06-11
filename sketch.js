@@ -49,7 +49,7 @@ function setup(){
     player.addAnimation("anime",playerAnime);
     player.addAnimation("anime2",player_stop);
     player.scale  = 0.075;
-  
+    player.setCollider("rectangle",0,0,player.width,player.height)
     
     gameOver = createSprite(width/2,height/2-50,10,10);
     gameOver.addAnimation("gameover",gameoverImg);
@@ -58,7 +58,7 @@ function setup(){
     restart.addImage("restart",restartImg);
     restart.scale = 0.35
   
-
+  player.debug = true;
     
   trapGroup = new Group();
   treasureGroup = new Group();
@@ -76,7 +76,7 @@ function draw(){
   
    if (gameState == 1){
      
-  Touch();
+ 
     player.x=World.mouseX;
      
      gameOver.visible = false;
@@ -90,8 +90,7 @@ function draw(){
      }
      else if(ran==2){
      spawnTrap()}
-  player.collide(trapGroup,destroy1);
-         player.collide(treasureGroup,destroy2)
+       
        
 if (player.isTouching(trapGroup)){
          gameState = 0;
@@ -105,7 +104,6 @@ if (player.isTouching(trapGroup)){
        treasureGroup.destroyEach();
        
      }
-       
      
      }
     
@@ -152,6 +150,7 @@ function spawnTrap(){
   trap.velocityY = 4;
   trap.scale = 0.15;
   trap.lifetime = 200;
+  trap.debug = true;
   
    if (r ==1){
      trap.addImage("trap1", trap1);     
@@ -178,7 +177,7 @@ function end (){
      
      
      road.velocityY= 0;
-     player.velocityY =0;
+     
      gameOver.visible = true;
      player.changeAnimation("anime2", player_stop);
   
@@ -202,22 +201,5 @@ function reset(){
   score = 0;
   
   
-}
-
-function Touch(){
-  if(touches.length > 0 && player.y  >= height-120) {
-      player.velocityY = -10;
-       touches = [];
-    }
-}
-
-function destroy1(player,trap){
-  trap.destroy();
-  gameState = 0;
-}
-
-function destroy2(player,treasure){
-  treasure.destroy();
-  gameState = 0;
 }
 
